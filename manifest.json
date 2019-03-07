@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "crawler-ext",
+    "version": "0.1.0",
+    "description": "Interface for crawler native app",
+    "browser_action": {
+        "default_icon": {
+            "16": "dist/img/up-arrow.png",
+            "24": "dist/img/up-arrow.png",
+            "32": "dist/img/up-arrow.png"
+        },
+        "default_popup": "dist/popup/popup.html"
+    },
+    "background": {
+        "scripts": ["dist/background/background.js"],
+        "persistent": true
+    },
+    "permissions": ["nativeMessaging", "tabs", "storage"],
+    "web_accessible_resources": ["img/*", "*.map"],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

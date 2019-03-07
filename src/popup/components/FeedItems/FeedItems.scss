@@ -1,0 +1,68 @@
+.FeedItems {
+
+    .FeedItem {
+        font-size: 0.8em;
+        padding: 10px 10px 10px 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #efeeee;
+        border-top: 1px solid #efeeee;
+        background-color: #fffbfb;
+
+        &:hover {
+            background-color: #ffe6e6;
+        }
+
+        .FeedItem-new {
+            font-weight: bold;
+            color: #dc3434;
+            padding-left: 10px;
+        }
+
+        .FeedItem-toolbox {
+            float: right;
+        }
+
+        .FeedItem-toolboxItem {
+            margin: 0 5px 0 5px;
+        }
+
+        .FeedItems-folded {
+            display: none;
+        }
+
+        .FeedItems-unfolded {
+            display: initial;
+        }
+
+        .FeedItem-detailsProp {
+            font-size: 0.9em;
+
+            .FeedItem-detailsPropKey {
+                font-weight: bold;
+                color: #223;
+            }
+
+            .FeedItem-detailsPropItem {
+                display: inline-block;
+                margin: 0 3px 0 3px;
+            }
+        }
+
+        .FeedItem-info {
+            user-select: none;
+        }
+
+        .FeedItem-details {
+            margin: 10px 0 0 0;
+        }
+    }
+}
+
+.FeedItems-empty {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #777070;
+    padding: 10px 0 10px 0;
+    background-color: #fffbfb;
+}

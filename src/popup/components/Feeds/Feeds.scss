@@ -1,0 +1,143 @@
+.Feeds {
+
+    .Feeds-noFeeds {
+        text-align: center;
+        font-size: 1em;
+        font-weight: bold;
+        color: #777070;
+        padding: 10px 0 10px 0;
+        background-color: #fffbfb;
+    }
+
+    .Feed {
+        cursor: pointer;
+        border-bottom: 1px solid #efeeee;
+        border-top: 1px solid #efeeee;
+        background-color: #fffbfb;
+
+        &:hover {
+            background-color: #ffe6e6;
+        }
+
+        .Feed-data {
+            border-collapse: collapse;
+            width: 100%;
+
+            td {
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+        }
+
+        .Feed-infoMain {
+            padding-left: 10px;
+            width: 45%;
+            max-width: 100px;
+            overflow: hidden;
+        }
+
+        .Feed-id {
+            font-size: 0.8em;
+            color: #353030;
+            font-weight: bold;
+        }
+
+        .Feed-desc {
+            font-size: 0.7rem;
+        }
+
+        .Feed-ts {
+            font-size: 0.7em;
+            color: #8a6464;
+        }
+        .Feed-itemCount {
+            text-align: center;
+            width: 5%;
+        }
+
+        .Feed-newItemCount {
+            width: 20%;
+            color: #409c47;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .Feed-followUnfollow {
+            width: 30%;
+        }
+
+        .Feed-followUnfollow-btn {
+            cursor: pointer;
+            font-size: 0.7em;
+            color: #eee;
+            font-weight: bold;
+            border-radius: 4px;
+            padding: 5px 6px 5px 6px;
+        }
+
+        .Feed-follow-btn {
+            background-color: #4c7d48;
+            border: 1px solid #678865;
+            &:hover {
+                background-color: #679c63;
+            }
+        }
+
+        .Feed-unfollow-btn {
+            background-color: #da5039;
+            border: 1px solid #cc7161;
+            &:hover {
+                background-color: #ea6c57;
+            }
+        }
+
+        .Feed-toolboxItem {
+            cursor: pointer;
+            font-size: 1.4em;
+            color: #847271;
+            text-decoration: none;
+            text-shadow: 1px 1px #7b4c4c;
+
+            &:hover {
+                color: #a79290;
+            }
+        }
+
+        .Feed-edit,
+        .Feed-openNew {
+            text-align: center;
+        }
+
+        .Feed-deleteBtn {
+            color: #dc5555;
+
+            &:hover {
+                color: #b12525;
+            }
+        }
+
+        .Feed-openAllBtn {
+            color: #609677;
+            &:hover {
+                color: #66a58b;
+            }
+        }
+    }
+
+    .Feeds-noFeedsAdd {
+        font-size: 0.8em;
+        font-weight: normal;
+        color: #222;
+    }
+}
+
+.FollowedFeeds {
+    .FollowedFeeds-header {
+        text-align: center;
+        padding: 5px 0 5px 0;
+        font-size: 0.8em;
+        .FollowedFeeds-lastUpdateTS {
+            color: #29502c;
+        }
+    }
+}

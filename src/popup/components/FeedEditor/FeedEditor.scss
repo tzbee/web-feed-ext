@@ -1,0 +1,54 @@
+.FeedEditorPanel {
+    padding: 10px;
+
+    .FeedEditor-commands {
+        padding-top: 20px;
+
+        .unfollowBtn {
+            float: right;
+        }
+
+        .appBtn {
+            font-size: 1em;
+        }
+    }
+
+    .FeedEditor-prop {
+        margin: 15px 0 15px 0;
+    }
+
+    .FeedEditor-url {
+        margin-bottom: 10px;
+    }
+
+    .FeedEditor-tabNavItem {
+        display: inline-block;
+        width: 33%;
+    }
+
+    .TextInput {
+        display: inline-block;
+    }
+
+    h3 {
+        color: #6d6b5e;
+        font-size: 1em;
+        margin-bottom: 5px;
+    }
+
+    input[type=text] {
+        margin: 2px 0 2px 0;
+    }
+
+    input,
+    button,
+    select {
+        font-size: 0.9em;
+        padding: 4px;
+        color: #222;
+    }
+
+    textarea {
+        resize: none;
+    }
+}

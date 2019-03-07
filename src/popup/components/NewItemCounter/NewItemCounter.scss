@@ -1,0 +1,21 @@
+.NewItemNotification {
+    font-size: 0.63rem;
+    font-weight: bold;
+    padding: 2px;
+    border: 3px solid #5fb369;
+    background: #75bd7e;
+    border-radius: 6px;
+    color: #fafffb;
+    text-align: center;
+    display: inline-block;
+    margin-left: 10px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .NewItemNotification-elt {
+        display: inline-block;
+    }
+}
