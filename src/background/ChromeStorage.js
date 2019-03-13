@@ -29,6 +29,7 @@ export default class ChromeStorage {
     loadFeeds() {
         return new Promise(resolve => {
             this.storage.get(['feeds', 'lastUpdateTS'], data => {
+                debugger;
                 resolve(data || {});
             });
         });
