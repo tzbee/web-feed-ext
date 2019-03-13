@@ -11,10 +11,7 @@ import thunk from 'redux-thunk';
 import App from './components/App/App';
 import appReducer from './reducers/appReducer';
 
-import {
-    setCommands,
-    setFeedList
-} from './actions';
+import { setCommands, setFeedList } from './actions';
 
 const { Provider } = ReactRedux;
 const { createStore, applyMiddleware } = Redux;
@@ -46,7 +43,7 @@ chrome.runtime.sendMessage({ command: 'LOAD_FEEDS' });
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>,
     document.getElementById('root')
 );

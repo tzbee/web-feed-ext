@@ -1,0 +1,14 @@
+{
+    "id": "default-link-crawler-plugin",
+    "title": "Default Link Crawler Plugin",
+    "description": "Get all links from a page",
+    "args": [
+        {
+            "key": "urls",
+            "title": "URLs",
+            "type": "Array",
+            "default": []
+        }
+    ],
+    "returnFields": []
+}

@@ -97,8 +97,8 @@ export default class FeedManager extends EventEmitter {
         const feed = Object.assign(
             {},
             DEFAULT_FEED_PROPS,
-            this._normalizeFeedOptions(options),
-            { id: createID() }
+            { id: createID() },
+            this._normalizeFeedOptions(options)
         );
 
         return this._saveFeed(feed).then(() => feed);
@@ -270,7 +270,6 @@ export default class FeedManager extends EventEmitter {
 
     loadFeeds() {
         return storage.loadFeeds().then(config => {
-            debugger;
             const { feeds = {}, lastUpdateTS = null } = config;
             this.feeds = feeds;
             this.lastUpdateTS = lastUpdateTS;

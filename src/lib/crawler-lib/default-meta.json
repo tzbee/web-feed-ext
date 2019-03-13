@@ -1,0 +1,19 @@
+{
+    "id": "", // Required
+    "title": "",
+    "description": "",
+    "args": [{
+        "key": "",
+        "title": "",
+        "type": "",
+        "values": [{
+            "id": "",
+            "label": ""
+        }],
+        "default": []
+    }],
+    "returnFields": [{
+        "name": "",
+        "label": ""
+    }]
+}
