@@ -1,5 +1,5 @@
-import * as React from "react";
-import * as ReactRedux from "react-redux";
+import * as React from 'react';
+import * as ReactRedux from 'react-redux';
 
 import {
     setTab,
@@ -10,7 +10,7 @@ import {
     createNewFeed,
     setFeedItemList,
     toggleItemFolding
-} from "../../actions";
+} from '../../actions';
 
 import {
     saveFeed,
@@ -21,17 +21,17 @@ import {
     markItemAsRead,
     openNewTab,
     banItemIDFromFeed
-} from "../../actions/command-actions";
+} from '../../actions/command-actions';
 
-import TabPanel from "./TabPanel";
-import FeedList from "../Feeds/Feeds";
-import FeedEditorTabPanel from "../FeedEditor/FeedEditor";
-import FeedItems from "../FeedItems/FeedItems";
+import TabPanel from './TabPanel';
+import FeedList from '../Feeds/Feeds';
+import FeedEditorTabPanel from '../FeedEditor/FeedEditor';
+import FeedItems from '../FeedItems/FeedItems';
 
 const { connect } = ReactRedux;
 
 const CLASS_MAP = {
-    tabNavItem: "MainTabPanel-tabNavItem"
+    tabNavItem: 'MainTabPanel-tabNavItem'
 };
 
 const MainTabPanel = ({ ...props }) => {
@@ -76,7 +76,7 @@ const createFeedEditorProps = (feedEditor, commands) => {
             );
             return Object.assign({}, arg, {
                 key,
-                value: (feedArg && feedArg.value) || ""
+                value: (feedArg && feedArg.value) || ''
             });
         });
 
@@ -110,17 +110,17 @@ const mapStateToProps = ({
 
     const tabs = [
         {
-            id: "FEED_LIST",
-            title: "My Feeds",
+            id: 'FEED_LIST',
+            title: 'My Feeds',
             data: { feeds }
         },
         {
-            id: "FEED_EDITOR",
-            title: "Create New Feed",
+            id: 'FEED_EDITOR',
+            title: 'Create New Feed',
             data: createFeedEditorProps(feedEditor, commands, feeds)
         },
         {
-            id: "FEED_ITEM_LIST",
+            id: 'FEED_ITEM_LIST',
             // No title props means the tab is not navigable through the menu
             data: {
                 feedID,
@@ -136,7 +136,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
     selectTabID: tabID => {
         dispatch(setTab(tabID));
-        if (tabID === "FEED_EDITOR") {
+        if (tabID === 'FEED_EDITOR') {
             dispatch(createNewFeed());
         }
     },
@@ -144,8 +144,8 @@ const mapDispatchToProps = dispatch => ({
     createFeed: feed => dispatch(createFeed(feed)),
     loadFeedToEditor: id => {
         dispatch(loadFeedToEditor(id));
-        dispatch(setTab("FEED_EDITOR"));
-        dispatch(setFeedEditorTab("GENERAL"));
+        dispatch(setTab('FEED_EDITOR'));
+        dispatch(setFeedEditorTab('GENERAL'));
     },
     setEditedFeed: feed => dispatch(setEditedFeed(feed)),
     deleteFeed: id => dispatch(deleteFeed(id)),
@@ -154,7 +154,7 @@ const mapDispatchToProps = dispatch => ({
     saveFeed: feed => dispatch(saveFeed(feed)),
     viewItems: id => {
         dispatch(setFeedItemList(id));
-        dispatch(setTab("FEED_ITEM_LIST"));
+        dispatch(setTab('FEED_ITEM_LIST'));
     },
     followFeed: id => dispatch(followFeed(id)),
     markFeedAsRead: id => dispatch(markFeedAsRead(id)),
@@ -187,12 +187,12 @@ const mergeProps = (propsFromState, propsFromDispatch) => {
 
     const { tabs } = propsFromState;
 
-    const feedEditorTab = tabs.find(tab => tab.id === "FEED_EDITOR");
+    const feedEditorTab = tabs.find(tab => tab.id === 'FEED_EDITOR');
     feedEditorTab.data.selectTabID = selectFeedEditorTabID;
     feedEditorTab.data.saveFeed = saveFeed;
     feedEditorTab.data.setEditedFeed = setEditedFeed;
 
-    const feedListTab = tabs.find(tab => tab.id === "FEED_LIST");
+    const feedListTab = tabs.find(tab => tab.id === 'FEED_LIST');
     feedListTab.data.editFeed = loadFeedToEditor;
     feedListTab.data.deleteFeed = deleteFeed;
     feedListTab.data.createNewFeed = createNewFeed;
@@ -202,7 +202,7 @@ const mergeProps = (propsFromState, propsFromDispatch) => {
     feedListTab.data.markFeedAsRead = markFeedAsRead;
     feedListTab.data.openNewTab = openNewTab;
 
-    const feedItemListTab = tabs.find(tab => tab.id === "FEED_ITEM_LIST");
+    const feedItemListTab = tabs.find(tab => tab.id === 'FEED_ITEM_LIST');
     feedItemListTab.data.markItemAsRead = markItemAsRead;
     feedItemListTab.data.openNewTab = openNewTab;
     feedItemListTab.data.banItemIDFromFeed = banItemIDFromFeed;
