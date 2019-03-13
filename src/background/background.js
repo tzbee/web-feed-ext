@@ -7,6 +7,7 @@ import { hookEvents } from './events';
 import openNewTab from './tab-context';
 
 import log from './log';
+import { runSequence } from './async';
 
 // Connect to host application
 const port = chrome.runtime.connectNative('com.tzbee.crawler');
@@ -52,23 +53,13 @@ setTimeout(() => {
 
 		// TODO Set example feed only on first startup
 		// TODO Load the example(s) from a file
-		const EXAMPLE_FEED = {
-			id: '-1',
-			title: 'Example feed',
-			description: 'This is an example feed',
-			commandID: 'default-link-crawler-plugin',
-			args: [
-				{
-					title: 'URLs',
-					key: 'urls',
-					type: 'Array',
-					default: [],
-					value: ['https://en.wikipedia.org/wiki/Main_Page']
-				}
-			]
-		};
+		const EXAMPLE_FEEDS = require('./example-feeds.json');
 
-		feedManager.createFeed(EXAMPLE_FEED).then(feed => {
+		const fnQueue = EXAMPLE_FEEDS.map(exampleFeed =>
+			feedManager.createFeed.bind(feedManager, exampleFeed)
+		);
+
+		runSequence(fnQueue, 0, 0).then(() => {
 			feedManager.watchFeeds();
 		});
 	});
