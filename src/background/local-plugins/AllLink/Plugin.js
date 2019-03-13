@@ -1,4 +1,4 @@
-const BasicPlugin = require('../../lib/crawler-lib').BasicPlugin;
+const BasicPlugin = require('../../../lib/crawler-lib').BasicPlugin;
 const Parser = require('./Parser'); // sync
 
 module.exports = class DefaultLinkCrawlerPlugin extends BasicPlugin {

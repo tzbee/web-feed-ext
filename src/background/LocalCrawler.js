@@ -1,5 +1,5 @@
 import log from './log';
-import LinkPlugin from './local-plugins/Plugin';
+import LinkPlugin from './local-plugins/AllLink/Plugin';
 
 /*
 	Map holding available local plugins
