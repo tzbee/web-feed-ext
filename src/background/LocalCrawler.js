@@ -4,11 +4,24 @@ import LinkPlugin from './local-plugins/AllLink/Plugin';
 /*
 	Map holding available local plugins
 */
-const linkPlugin = new LinkPlugin();
 
-const PLUGIN_MAP = {
-	[linkPlugin.id]: linkPlugin
-};
+const REGISTERED_PLUGINS = [
+	require('./local-plugins/AllLink/Plugin'),
+	require('./local-plugins/IMDBOpeningThisWeek/Plugin')
+];
+
+const PLUGIN_MAP = REGISTERED_PLUGINS.reduce((pluginMap, Plugin) => {
+	// Create plugin instance
+	const plugin = new Plugin();
+	pluginMap[plugin.id] = plugin;
+	return pluginMap;
+}, {});
+
+// const linkPlugin = new LinkPlugin();
+
+// const PLUGIN_MAP = {
+// 	[linkPlugin.id]: linkPlugin
+// };
 
 const DEFAULT_PLUGIN_ID = Object.keys(PLUGIN_MAP)[0];
 

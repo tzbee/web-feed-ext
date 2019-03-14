@@ -1,0 +1,7 @@
+{
+	"id": "imdb-opening-this-week-crawler-plugin",
+	"title": "IMDB opening this week",
+	"description": "Gets the opening week movies on IMDB",
+	"args": [],
+	"returnFields": []
+}
