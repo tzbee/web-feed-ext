@@ -1,7 +1,7 @@
 const BasicPlugin = require('../../../lib/crawler-lib').BasicPlugin;
 const Parser = require('./Parser'); // sync
 
-module.exports = class TermSearchPlugin extends BasicPlugin {
+module.exports = class IMDBOpeningThisWeekPlugin extends BasicPlugin {
 	constructor(options = {}) {
 		super(
 			Object.assign({
