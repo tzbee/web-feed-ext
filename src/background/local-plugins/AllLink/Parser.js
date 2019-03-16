@@ -8,15 +8,17 @@ module.exports = class Parser {
 
     parse(html) {
         const $ = cheerio.load(html);
-        return $('a').map((i, e) => {
-            const $e = $(e);
-            const title = $e.html();
-            const url = $e.attr('href');
-            return {
-                id: url,
-                title,
-                url
-            };
-        }).get();
+        return $('a')
+            .map((i, e) => {
+                const $e = $(e);
+                const title = $e.html();
+                const url = $e.attr('href');
+                return {
+                    id: url,
+                    title,
+                    url
+                };
+            })
+            .get();
     }
 };
