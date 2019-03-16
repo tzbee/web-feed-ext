@@ -20,19 +20,9 @@ const PLUGIN_MAP = REGISTERED_PLUGINS.reduce((pluginMap, Plugin) => {
 	return pluginMap;
 }, {});
 
-// const linkPlugin = new LinkPlugin();
-
-// const PLUGIN_MAP = {
-// 	[linkPlugin.id]: linkPlugin
-// };
-
 const DEFAULT_PLUGIN_ID = Object.keys(PLUGIN_MAP)[0];
 
 export default class LocalCrawler {
-	constructor() {
-		this.loadingState = 'IDLE'; // IDLE, LOADING
-	}
-
 	/*
         Async
         returns Promise 

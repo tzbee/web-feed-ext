@@ -26,25 +26,6 @@ module.exports = class Fetcher {
 			};
 
 			$.ajax(url, xhrOptions);
-			// request(
-			// 	{
-			// 		url
-			// 	},
-			// 	(err, response, body) => {
-			// 		if (!err && response.statusCode === 200) {
-			// 			resolve(body);
-			// 		} else {
-			// 			reject(
-			// 				new Error(
-			// 					`Fetching error has occured: ${err &&
-			// 						err.message}, status code: ${
-			// 						response.statusCode
-			// 					}`
-			// 				)
-			// 			);
-			// 		}
-			// 	}
-			// );
 		});
 	}
 };
