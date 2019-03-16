@@ -1,6 +1,6 @@
-const LOADING_ICON_PATH = 'img/loading.svg';
-const DEFAULT_ICON_PATH = 'img/up-arrow.png';
-const NEW_FEEDS_ICON_PATH = 'img/new_feeds.png';
+const LOADING_ICON_PATH = 'dist/img/loading.svg';
+const DEFAULT_ICON_PATH = 'dist/img/up-arrow.png';
+const NEW_FEEDS_ICON_PATH = 'dist/img/new_feeds.png';
 
 const setIconByPath = path => chrome.browserAction.setIcon({ path });
 

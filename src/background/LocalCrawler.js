@@ -1,5 +1,8 @@
 import log from './log';
 import LinkPlugin from './local-plugins/AllLink/Plugin';
+import { setDefaultIcon, setLoadingIcon, setNewFeedsIcon } from './PopupIcon';
+
+// TODO move state to the object itself
 
 /*
 	Map holding available local plugins
@@ -26,6 +29,10 @@ const PLUGIN_MAP = REGISTERED_PLUGINS.reduce((pluginMap, Plugin) => {
 const DEFAULT_PLUGIN_ID = Object.keys(PLUGIN_MAP)[0];
 
 export default class LocalCrawler {
+	constructor() {
+		this.loadingState = 'IDLE'; // IDLE, LOADING
+	}
+
 	/*
         Async
         returns Promise 
@@ -34,6 +41,9 @@ export default class LocalCrawler {
 
 	crawl(pluginID = DEFAULT_PLUGIN_ID, options = []) {
 		log(`Running plugin ${pluginID}' in browser`);
+
+		// Set loading icon
+		setLoadingIcon();
 
 		if (!pluginID)
 			return Promise.reject(
@@ -54,7 +64,10 @@ export default class LocalCrawler {
 				return map;
 			}, {});
 
-		return plugin.run(optionsMap);
+		return plugin.run(optionsMap).then(results => {
+			setDefaultIcon();
+			return results;
+		});
 	}
 
 	get() {
