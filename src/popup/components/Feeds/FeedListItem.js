@@ -75,7 +75,9 @@ export default ({
     };
 
     const relativeTime = getRelativeTime();
-    const relativeTimeMessage = relativeTime ? relativeTime + ' ago' : '';
+    const relativeTimeMessage = relativeTime
+        ? 'Updated ' + relativeTime + ' ago'
+        : '';
 
     const handleEdit = e => {
         e.stopPropagation();
