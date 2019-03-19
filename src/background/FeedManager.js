@@ -422,8 +422,9 @@ export default class FeedManager extends EventEmitter {
 
         const noDuplicatesResults = Object.values(resultMap);
 
+        // Filter out empty and banned ids
         const filteredBannedIDs = noDuplicatesResults.filter(res => {
-            return !bannedIDs.includes(res.id);
+            return !!res.id && !bannedIDs.includes(res.id);
         });
 
         return filteredBannedIDs;
