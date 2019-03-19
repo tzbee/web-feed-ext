@@ -11,7 +11,7 @@ module.exports = class Parser {
         return $('a')
             .map((i, e) => {
                 const $e = $(e);
-                const title = $e.html();
+                const title = $e.text();
                 const url = $e.attr('href');
                 return {
                     id: url,
