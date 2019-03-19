@@ -6,6 +6,7 @@
         parser
         urls
         items
+        isLoading
     Items
         Array of 
             id
@@ -386,16 +387,27 @@ export default class FeedManager extends EventEmitter {
         const crawl = this.crawler.crawl.bind(this.crawler);
         const { commandID, args: commandOptions } = feed;
 
+        this._setLoading(feed.id, true);
+
         // Start crawling the urls
         return crawl(commandID, commandOptions)
             .then(results => this._filterResults(results, feed.bannedIDs))
             .then(results => this._handleResults(results, feed))
             .catch(err => {
                 log('Crawling ERROR: ' + err.message);
+
+                this._setLoading(feed.id, false);
+
                 // The crawling has encountered a problem
                 // This feed is done updating
                 this._updateCount(-1, feed);
             });
+    }
+
+    _setLoading(feedID, loadingState) {
+        const feed = this.getFeed(feedID);
+        feed.isLoading = loadingState;
+        this.emit('FEEDS_HAVE_CHANGED', this.getFeeds(), feed);
     }
 
     /*
@@ -429,6 +441,8 @@ export default class FeedManager extends EventEmitter {
         const now = Date.now();
         this.lastUpdateTS = now;
         feed.lastUpdateTS = now;
+
+        this._setLoading(feed.id, false);
 
         if (results && results.length > 0) {
             log(`${results.length} items found for feed ${feed.id}`);

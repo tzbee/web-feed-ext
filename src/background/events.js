@@ -13,6 +13,8 @@ export const hookEvents = (
     feedManager.on('FEEDS_HAVE_CHANGED', feeds => {
         dispatcher.sendMessage('FEEDS', { feeds });
 
+        debugger;
+
         // Update the popup icon when new feeds are available
         if (getTotalNewFeedItemsCount(feeds) > 0) {
             setNewFeedsIcon();

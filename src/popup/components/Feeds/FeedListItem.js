@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from 'react';
 
-import NewItemCounter from "../NewItemCounter/NewItemCounter";
+import NewItemCounter from '../NewItemCounter/NewItemCounter';
 
 const getNewItemCount = items => items.filter(item => item.isNew).length;
 
@@ -14,7 +14,15 @@ export default ({
     openNewTab,
     viewItems
 }) => {
-    const { id, title, description, items, lastUpdateTS, followed } = feed;
+    const {
+        id,
+        title,
+        description,
+        items,
+        lastUpdateTS,
+        followed,
+        isLoading
+    } = feed;
 
     const handleFollow = () => {
         followFeed && followFeed(id);
@@ -42,32 +50,32 @@ export default ({
         const valueLabels = [
             {
                 value: toDays,
-                label: "days"
+                label: 'days'
             },
             {
                 value: toHour,
-                label: "h"
+                label: 'h'
             },
             {
                 value: toMin,
-                label: "min"
+                label: 'min'
             },
             {
                 value: toSec,
-                label: "sec"
+                label: 'sec'
             }
         ];
 
-        const DEFAULT_VALUE_LABEL = { value: 0, label: "sec" };
+        const DEFAULT_VALUE_LABEL = { value: 0, label: 'sec' };
         const { value, label } =
             valueLabels.find(valueLabel => valueLabel.value >= 1) ||
             DEFAULT_VALUE_LABEL;
 
-        return value + " " + label;
+        return value + ' ' + label;
     };
 
     const relativeTime = getRelativeTime();
-    const relativeTimeMessage = relativeTime ? relativeTime + " ago" : "";
+    const relativeTimeMessage = relativeTime ? relativeTime + ' ago' : '';
 
     const handleEdit = e => {
         e.stopPropagation();
@@ -105,6 +113,11 @@ export default ({
                                 items.length) ||
                                 0})`}</div>
                             <div className="Feed-ts">{relativeTimeMessage}</div>
+                        </td>
+                        <td className="Feed-loadingState">
+                            {isLoading && (
+                                <span className="fa fa-spinner fa-spin" />
+                            )}
                         </td>
                         <td className="Feed-newItemCount">
                             {(newItemCount || null) && (
