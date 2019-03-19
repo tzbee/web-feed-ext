@@ -1,8 +1,8 @@
-import "./FeedItems.scss";
+import './FeedItems.scss';
 
-import * as React from "react";
+import * as React from 'react';
 
-import NewItemCounter from "../NewItemCounter/NewItemCounter";
+import NewItemCounter from '../NewItemCounter/NewItemCounter';
 
 const EmptyFeedItems = () => (
     <div className="FeedItems-empty"> No Feed Items </div>
@@ -24,10 +24,10 @@ export default ({
 
     return items && items.length > 0 ? (
         <ul className="FeedItems">
-            {" "}
+            {' '}
             {items.map((item, i) => (
                 <FeedItem
-                    key={"fi-" + item.id + "-" + i}
+                    key={'fi-' + item.id + '-' + i}
                     item={item}
                     isFolded={item.isFolded}
                     openNewTab={openNewTab}
@@ -35,7 +35,7 @@ export default ({
                     banItemID={handleBanItemID}
                     toggleItemFolding={toggleItemFolding}
                 />
-            ))}{" "}
+            ))}{' '}
         </ul>
     ) : (
         <EmptyFeedItems />
@@ -69,52 +69,58 @@ const FeedItem = ({
         toggleItemFolding && toggleItemFolding(id, !isFolded);
     };
 
-    const foldedClass = isFolded ? "FeedItems-folded" : "FeedItem-unfolded";
+    const foldedClass = isFolded ? 'FeedItems-folded' : 'FeedItem-unfolded';
 
     return (
         <li className="FeedItem" title={url}>
             <div className="FeedItem-info" onClick={handleFoldClick}>
-                {" "}
-                {title || id}{" "}
+                {' '}
+                {title || id}{' '}
                 {isNew ? (
                     <NewItemCounter markAsRead={handleNewItemCounterClick} />
-                ) : null}{" "}
+                ) : null}{' '}
                 <div className="FeedItem-toolbox">
                     <a
                         className="FeedItem-banItemIDBtn FeedItem-toolboxItem"
                         href="#"
                         onClick={handleBanItemID}
                     >
-                        {" "}
-                        Ban item ID{" "}
-                    </a>{" "}
+                        {' '}
+                        Ban item ID{' '}
+                    </a>{' '}
                     <a
                         className="FeedItem-foldUnfold FeedItem-toolboxItem"
                         href="#"
                         onClick={handleFollowLink}
                     >
-                        {" "}
-                        Go to link{" "}
-                    </a>{" "}
-                </div>{" "}
-            </div>{" "}
-            <ul className={`FeedItem-details ${foldedClass}`}>
-                {" "}
-                {Object.keys(data).map(propKey => {
-                    return (
-                        <li className="FeedItem-detailsProp">
-                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
-                                {" "}
-                                {propKey}{" "}
-                            </div>{" "}
-                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
-                                {" "}
-                                {JSON.stringify(data[propKey])}{" "}
-                            </div>{" "}
-                        </li>
-                    );
-                })}{" "}
-            </ul>{" "}
+                        {' '}
+                        Go to link{' '}
+                    </a>{' '}
+                </div>{' '}
+            </div>{' '}
+            <FeedItemDetails
+                data={Object.assign({}, data, { title, url })}
+                foldedClass={foldedClass}
+            />
         </li>
+    );
+};
+
+const FeedItemDetails = ({ data, foldedClass }) => {
+    return (
+        <ul className={`FeedItem-details ${foldedClass}`}>
+            {Object.keys(data).map(propKey => {
+                return (
+                    <li className="FeedItem-detailsProp">
+                        <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
+                            {propKey}
+                        </div>
+                        <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
+                            {data[propKey]}
+                        </div>
+                    </li>
+                );
+            })}
+        </ul>
     );
 };
