@@ -72,8 +72,8 @@ const FeedItem = ({
     const foldedClass = isFolded ? 'FeedItems-folded' : 'FeedItem-unfolded';
 
     return (
-        <li className="FeedItem" title={url}>
-            <div className="FeedItem-info" onClick={handleFoldClick}>
+        <li className="FeedItem" title={url} onClick={handleFoldClick}>
+            <div className="FeedItem-info">
                 {' '}
                 {title || id}{' '}
                 {isNew ? (
