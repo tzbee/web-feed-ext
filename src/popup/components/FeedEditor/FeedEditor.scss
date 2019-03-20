@@ -1,6 +1,10 @@
 .FeedEditorPanel {
     padding: 10px;
 
+    .FeedEditor {
+        padding-left: 8px;
+    }
+
     .FeedEditor-commands {
         padding-top: 20px;
 
@@ -36,7 +40,7 @@
         margin-bottom: 5px;
     }
 
-    input[type=text] {
+    input[type='text'] {
         margin: 2px 0 2px 0;
     }
 
