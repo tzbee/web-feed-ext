@@ -24,3 +24,11 @@ or
 
 Load the unpacked extension into chrome or pack it yourself first.
 
+## Usage
+
+Create a new feed.
+Choose the command(2 available plugins for now) and options.
+Follow/Unfollow the feed to activate or desactivate auto updates.
+
+The first example feed retrieves all links from the wikipedia homepage.
+The second example feed retrieves the movies opening this week on IMDB.
