@@ -74,11 +74,14 @@ const FeedItem = ({
     return (
         <li className="FeedItem" title={url} onClick={handleFoldClick}>
             <div className="FeedItem-info">
-                {' '}
-                {title || id}{' '}
-                {isNew ? (
-                    <NewItemCounter markAsRead={handleNewItemCounterClick} />
-                ) : null}{' '}
+                <div className="FeedItem-title">{title || id}</div>
+                <div className="FeedItem-newNotification">
+                    {isNew ? (
+                        <NewItemCounter
+                            markAsRead={handleNewItemCounterClick}
+                        />
+                    ) : null}
+                </div>
                 <div className="FeedItem-toolbox">
                     <a
                         className="FeedItem-banItemIDBtn FeedItem-toolboxItem"
@@ -96,8 +99,8 @@ const FeedItem = ({
                         {' '}
                         Go to link{' '}
                     </a>{' '}
-                </div>{' '}
-            </div>{' '}
+                </div>
+            </div>
             <FeedItemDetails
                 data={Object.assign({}, data, { title, url })}
                 foldedClass={foldedClass}

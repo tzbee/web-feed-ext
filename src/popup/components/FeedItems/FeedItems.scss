@@ -1,5 +1,6 @@
-.FeedItems {
+$ITEM_TITLE_COLOR: #4c4949;
 
+.FeedItems {
     .FeedItem {
         font-size: 0.8em;
         padding: 10px 10px 10px 10px;
@@ -18,12 +19,18 @@
             padding-left: 10px;
         }
 
+        .FeedItem-title {
+            font-weight: bold;
+            color: $ITEM_TITLE_COLOR;
+        }
+
         .FeedItem-toolbox {
             float: right;
         }
 
         .FeedItem-toolboxItem {
             margin: 0 5px 0 5px;
+            color: #222277;
         }
 
         .FeedItems-folded {
@@ -37,19 +44,26 @@
         .FeedItem-detailsProp {
             font-size: 0.9em;
 
+            .FeedItem-detailsPropItem {
+                display: inline-block;
+                margin: 0 3px 0 3px;
+            }
+
             .FeedItem-detailsPropKey {
                 font-weight: bold;
                 color: #223;
             }
 
-            .FeedItem-detailsPropItem {
-                display: inline-block;
-                margin: 0 3px 0 3px;
+            .FeedItem-detailsPropValue {
+                color: #444;
             }
         }
 
         .FeedItem-info {
             user-select: none;
+            & > * {
+                display: inline-block;
+            }
         }
 
         .FeedItem-details {
@@ -60,7 +74,7 @@
 
 .FeedItems-empty {
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-weight: bold;
     color: #777070;
     padding: 10px 0 10px 0;
