@@ -1,6 +1,14 @@
 .FeedEditorPanel {
     padding: 10px;
 
+    .FeedEditorPanel-header {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #545454;
+        padding: 10px 0 10px 0;
+    }
+
     .FeedEditor {
         padding-left: 8px;
     }
