@@ -1,8 +1,8 @@
 [
 	{
 		"id": "-1",
-		"title": "Example feed 1",
-		"description": "This is an example feed",
+		"title": "[Example] Wikipedia links",
+		"description": "Links from the wikipedia main page",
 		"commandID": "default-link-crawler-plugin",
 		"args": [
 			{
@@ -16,8 +16,8 @@
 	},
 	{
 		"id": "-2",
-		"title": "Example feed 2",
-		"description": "This is an other example feed",
+		"title": "[Example] IMDB Opening movies",
+		"description": "Opening movies this week on IMDB ",
 		"commandID": "imdb-opening-this-week-crawler-plugin",
 		"args": []
 	}
