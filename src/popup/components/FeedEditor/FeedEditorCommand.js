@@ -14,24 +14,46 @@ export default ({ feed = {}, commandIDs, setEditedFeed }) => {
         setEditedFeed(Object.assign({}, feed, { args }));
     };
 
-    return <div className='FeedEditor FeedEditorCommand'>
-                <div className='FeedEditor-pluginID FeedEditor-prop'>
-                    <h3>Commands</h3>
-                    <CommandSelection commandIDs={commandIDs} selectedCommand={commandID} selectCommand={handleCommandSelectionChange}/>
-                    <CommandArgs id={id} args={args} onChange={handleArgsChange}/>
-                </div>
-            </div>;
+    return (
+        <div className="FeedEditor FeedEditorCommand">
+            <div className="FeedEditor-pluginID FeedEditor-prop">
+                <h3>Commands</h3>
+                <CommandSelection
+                    commandIDs={commandIDs}
+                    selectedCommand={commandID}
+                    selectCommand={handleCommandSelectionChange}
+                />
+            </div>
+            <div className="FeedEditor-prop">
+                <CommandArgs id={id} args={args} onChange={handleArgsChange} />
+            </div>
+        </div>
+    );
 };
 
 const CommandSelection = ({ commandIDs, selectedCommand, selectCommand }) => {
-
     const handleSelectionChange = e => {
         selectCommand(e.target.value);
     };
 
-    return (commandIDs && commandIDs.length > 0) ? <select value={selectedCommand} onChange={handleSelectionChange}>
-                {commandIDs && commandIDs.map(commandID=><CommandSelectionItem key={'c-'+commandID} commandID={commandID}/>)}
-            </select> : null;
+    return (
+        <div className="CommandSelection">
+            {commandIDs && commandIDs.length > 0 ? (
+                <select
+                    value={selectedCommand}
+                    onChange={handleSelectionChange}
+                >
+                    {commandIDs &&
+                        commandIDs.map(commandID => (
+                            <CommandSelectionItem
+                                key={'c-' + commandID}
+                                commandID={commandID}
+                            />
+                        ))}
+                </select>
+            ) : null}
+        </div>
+    );
 };
 
 const CommandSelectionItem = ({ commandID }) => {
@@ -40,12 +62,23 @@ const CommandSelectionItem = ({ commandID }) => {
 
 const CommandArgs = ({ id, args = [], onChange }) => {
     const handleArgChange = newArg => {
-        onChange(args.map(arg => arg.key === newArg.key ? newArg : arg));
+        onChange(args.map(arg => (arg.key === newArg.key ? newArg : arg)));
     };
 
-    return <div className='CommandArgs'>
-        {args && args.map && args.map(arg=><CommandArgItem id={id} key={arg.key} arg={arg} onChange={handleArgChange}/>)}
-    </div>;
+    return (
+        <div className="CommandArgs">
+            {args &&
+                args.map &&
+                args.map(arg => (
+                    <CommandArgItem
+                        id={id}
+                        key={arg.key}
+                        arg={arg}
+                        onChange={handleArgChange}
+                    />
+                ))}
+        </div>
+    );
 };
 
 const CommandArgItem = ({ id, arg, onChange }) => {
@@ -56,29 +89,59 @@ const CommandArgItem = ({ id, arg, onChange }) => {
         onChange && onChange(Object.assign({}, arg, { value: newValue }));
     };
 
-    return <div className='CommandArgItem'>
-                <label htmlFor={id}>
-                    <h3>{title}</h3>
-                    <CommandArgValue id={valueID} type={type} value={value} values={values} onChange={handleArgChange}/>
-                </label>
-            </div>;
+    return (
+        <div className="CommandArgItem">
+            <label htmlFor={id}>
+                <h3>{title}</h3>
+                <CommandArgValue
+                    id={valueID}
+                    type={type}
+                    value={value}
+                    values={values}
+                    onChange={handleArgChange}
+                />
+            </label>
+        </div>
+    );
 };
 
 const CommandArgValue = ({ id, type, value, onChange, values }) => {
     const typeMap = {
-        'Array': <ListInput onChange={onChange} value={value}/>,
-        'Selection': <SelectionInput onChange={onChange} selectedValues={value} selectOptions={values}/>,
-        'Query': <QueryEditor id={id} query={value} dataFields={values} onQueryChange={onChange}/>
+        Array: <ListInput onChange={onChange} value={value} />,
+        Selection: (
+            <SelectionInput
+                onChange={onChange}
+                selectedValues={value}
+                selectOptions={values}
+            />
+        ),
+        Query: (
+            <QueryEditor
+                id={id}
+                query={value}
+                dataFields={values}
+                onQueryChange={onChange}
+            />
+        )
     };
 
-    return typeMap[type] || <TextInput id={id} onChange={onChange} value={value}/>;
+    return (
+        typeMap[type] || <TextInput id={id} onChange={onChange} value={value} />
+    );
 };
 
 const TextInput = ({ id, value, onChange }) => {
     const handleInputChange = e => onChange(e.target.value);
-    return <div className='TextInput'>
-                <input id={id || null} type='text' value={value} onChange={handleInputChange}/>
-            </div>;
+    return (
+        <div className="TextInput">
+            <input
+                id={id || null}
+                type="text"
+                value={value}
+                onChange={handleInputChange}
+            />
+        </div>
+    );
 };
 
 const ListInput = ({ id, value, onChange }) => {
@@ -104,15 +167,30 @@ const ListInput = ({ id, value, onChange }) => {
         value = [''];
     }
 
-    return <ul id={id} className='ListInput'>
-                {value &&value.map((item,i)=>{
-                    return <li className='ListInput-item' key={'lii-'+i}>
-                        <TextInput id={'li-'+i} value={item} onChange={newValue=>handleListChange(i,newValue)}/>
-                        <button type='button' onClick={()=>removeItem(i)}>X</button>
-                    </li>;
+    return (
+        <ul id={id} className="ListInput">
+            {value &&
+                value.map((item, i) => {
+                    return (
+                        <li className="ListInput-item" key={'lii-' + i}>
+                            <TextInput
+                                id={'li-' + i}
+                                value={item}
+                                onChange={newValue =>
+                                    handleListChange(i, newValue)
+                                }
+                            />
+                            <button type="button" onClick={() => removeItem(i)}>
+                                X
+                            </button>
+                        </li>
+                    );
                 })}
-                <button type='button' onClick={addItem}>Add</button>
-            </ul>;
+            <button type="button" onClick={addItem}>
+                Add
+            </button>
+        </ul>
+    );
 };
 
 const SelectionInput = ({ id, selectedValues, selectOptions, onChange }) => {
@@ -122,7 +200,10 @@ const SelectionInput = ({ id, selectedValues, selectOptions, onChange }) => {
 
         selectedValues = selectedValues || [];
 
-        const oldSelectedValuesMap = selectedValues.reduce((map, value) => (map[value] = true) && map, {});
+        const oldSelectedValuesMap = selectedValues.reduce(
+            (map, value) => (map[value] = true) && map,
+            {}
+        );
 
         if (newSelectedValue) {
             oldSelectedValuesMap[id] = true;
@@ -133,10 +214,23 @@ const SelectionInput = ({ id, selectedValues, selectOptions, onChange }) => {
         onChange(Object.keys(oldSelectedValuesMap));
     };
 
-    return <div className='SelectionInput'>
-            {selectOptions.map(({id,label})=>{
-                const selected = selectedValues.indexOf(id)!==-1;
-                return <label htmlFor={'arg-select-'+id}>{label}<input id={'arg-select-'+id} type='checkBox' value={id} checked={selected} onChange={handleSelectionChange}/></label>;
+    return (
+        <div className="SelectionInput">
+            {selectOptions.map(({ id, label }) => {
+                const selected = selectedValues.indexOf(id) !== -1;
+                return (
+                    <label htmlFor={'arg-select-' + id}>
+                        {label}
+                        <input
+                            id={'arg-select-' + id}
+                            type="checkBox"
+                            value={id}
+                            checked={selected}
+                            onChange={handleSelectionChange}
+                        />
+                    </label>
+                );
             })}
-        </div>;
+        </div>
+    );
 };
