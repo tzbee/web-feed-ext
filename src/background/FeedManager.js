@@ -37,6 +37,12 @@ const DEFAULT_DATA_FIELDS = [
 const DEFAULT_TITLE = 'No name';
 const DEFAULT_DESCRIPTION = '';
 
+const MIN_UPDATE_TIMER = 60 * 1000; // in ms
+
+const FEED_CHECK_MAP = {
+    updateTimer: [n => n >= MIN_UPDATE_TIMER, MIN_UPDATE_TIMER]
+};
+
 const DEFAULT_FEED_PROPS = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
@@ -131,12 +137,29 @@ export default class FeedManager extends EventEmitter {
 
     */
     _saveFeed(feed) {
-        this.feeds[feed.id] = feed;
+        this.feeds[feed.id] = this._applyFeedCheck(feed);
         return this._saveFeeds().then(() => {
             const feeds = this.getFeeds();
             this.emit('FEEDS_HAVE_CHANGED', feeds, feed);
             return feeds;
         });
+    }
+
+    _applyFeedCheck(feed) {
+        log('Checking feed props');
+
+        Object.keys(FEED_CHECK_MAP).forEach(propToCheck => {
+            const [checkFn, defaultValue] = FEED_CHECK_MAP[propToCheck];
+            const valueToCheck = feed[propToCheck];
+            if (!checkFn(valueToCheck)) {
+                log(
+                    `Feed property ${propToCheck} invalid, defaulting back to value ${defaultValue}`
+                );
+                feed[propToCheck] = defaultValue;
+            }
+        });
+
+        return feed;
     }
 
     createAndUpdateFeed(options) {
