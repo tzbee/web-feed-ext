@@ -8,7 +8,7 @@ module.exports = class Parser {
 
     parse(html) {
         const $ = cheerio.load(html);
-        return $('a')
+        const regularLinks = $('a')
             .map((i, e) => {
                 const $e = $(e);
                 const title = $e.text();
@@ -20,5 +20,21 @@ module.exports = class Parser {
                 };
             })
             .get();
+
+        const imgLinks = $('img')
+            .map((i, e) => {
+                const $e = $(e);
+                const title = $e.attr('alt');
+                const url = $e.attr('src');
+                return {
+                    id: url,
+                    title,
+                    url,
+                    img: url
+                };
+            })
+            .get();
+
+        return regularLinks.concat(imgLinks);
     }
 };

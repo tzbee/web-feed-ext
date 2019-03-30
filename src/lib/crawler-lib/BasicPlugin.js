@@ -1,13 +1,18 @@
 const Fetcher = require('./Fetcher');
 const { runSequence } = require('./async-utils');
 
-const isRelativeURL = url => /^\/{1}[^?#]*/.test(url);
+const isRelativeURL = url => /^\/{1}[^\/]{1}[^?#]*/.test(url);
 
 const isHash = url => /[#]{1}[^?#]*/.test(url);
 
+const isProtocolRelativeURL = url => /^\/{2}[^?#]*/.test(url);
+
 const toAbsoluteURL = (parsedSourceURL, href) => {
+	if (!href) return '';
 	return isRelativeURL(href)
 		? parsedSourceURL.origin + href
+		: isProtocolRelativeURL(href)
+		? parsedSourceURL.protocol + href
 		: isHash(href)
 		? parsedSourceURL.href + href
 		: href;
@@ -31,6 +36,8 @@ module.exports = class BasicPlugin {
 			const parserResults = parser.parse(html).map(result => {
 				// Convert found urls into absolute url if needed
 				result.url = toAbsoluteURL(parsedSourceURL, result.url);
+				result.img = toAbsoluteURL(parsedSourceURL, result.img);
+
 				return result;
 			});
 			return parserResults;

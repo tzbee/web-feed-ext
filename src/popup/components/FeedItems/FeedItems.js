@@ -43,7 +43,7 @@ export default ({
 };
 
 const FeedItem = ({
-    item: { id, title, isNew, url, data = {} },
+    item: { id, title, img, isNew, url, data = {} },
     isFolded = true,
     openNewTab,
     markItemAsRead,
@@ -102,7 +102,7 @@ const FeedItem = ({
                 </div>
             </div>
             <FeedItemDetails
-                data={Object.assign({}, data, { title, url })}
+                data={Object.assign({}, data, { title, url, img })}
                 foldedClass={foldedClass}
             />
         </li>
@@ -114,16 +114,47 @@ const FeedItemDetails = ({ data, foldedClass }) => {
         <ul className={`FeedItem-details ${foldedClass}`}>
             {Object.keys(data).map(propKey => {
                 return (
-                    <li className="FeedItem-detailsProp">
-                        <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
-                            {propKey}
-                        </div>
-                        <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
-                            {data[propKey]}
-                        </div>
-                    </li>
+                    data[propKey] && (
+                        <li className="FeedItem-detailsProp">
+                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
+                                {propKey}
+                            </div>
+                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
+                                <PropValue
+                                    propKey={propKey}
+                                    propValue={data[propKey]}
+                                />
+                            </div>
+                        </li>
+                    )
                 );
             })}
         </ul>
+    );
+};
+
+const PropValue = ({ propKey, propValue }) => {
+    const valueMap = {
+        img: ImgPropValue
+    };
+
+    const ReactElement = propKey === 'img' ? ImgPropValue : TextPropValue;
+
+    return (
+        <div className="PropValue">
+            <ReactElement value={propValue} />
+        </div>
+    );
+};
+
+const TextPropValue = ({ value }) => {
+    return <div className="TextPropValue">{value}</div>;
+};
+
+const ImgPropValue = ({ value }) => {
+    return (
+        <div className="ImgPropValue">
+            <img src={value} />
+        </div>
     );
 };
