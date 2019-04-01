@@ -13,6 +13,14 @@ $ITEM_TITLE_COLOR: #4c4949;
             background-color: #ffe6e6;
         }
 
+        &.FeedItem-active {
+            display: inherit;
+        }
+
+        &.FeedItem-inactive {
+            display: none;
+        }
+
         .FeedItem-new {
             font-weight: bold;
             color: #dc3434;
@@ -33,11 +41,11 @@ $ITEM_TITLE_COLOR: #4c4949;
             color: #222277;
         }
 
-        .FeedItems-folded {
+        .FeedItem-folded {
             display: none;
         }
 
-        .FeedItems-unfolded {
+        .FeedItem-unfolded {
             display: initial;
         }
 

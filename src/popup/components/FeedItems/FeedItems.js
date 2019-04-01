@@ -26,7 +26,7 @@ export default ({
         <ul className="FeedItems">
             {items.map((item, i) => (
                 <FeedItem
-                    key={'fi-' + item.id + '-' + i}
+                    key={'fi-' + item.id}
                     item={item}
                     isFolded={item.isFolded}
                     openNewTab={openNewTab}
@@ -42,7 +42,7 @@ export default ({
 };
 
 const FeedItem = ({
-    item: { id, title, img, isNew, url, data = {} },
+    item: { id, title, img, isNew, url, data = {}, isActive },
     isFolded = true,
     openNewTab,
     markItemAsRead,
@@ -68,10 +68,15 @@ const FeedItem = ({
         toggleItemFolding && toggleItemFolding(id, !isFolded);
     };
 
-    const foldedClass = isFolded ? 'FeedItems-folded' : 'FeedItem-unfolded';
+    const isActiveClass = isActive ? 'FeedItem-active' : 'FeedItem-inactive';
+    const foldedClass = isFolded ? 'FeedItem-folded' : 'FeedItem-unfolded';
 
     return (
-        <li className="FeedItem" title={url} onClick={handleFoldClick}>
+        <li
+            className={`FeedItem ${isActiveClass}`}
+            title={url}
+            onClick={handleFoldClick}
+        >
             <div className="FeedItem-info">
                 <div className="FeedItem-title">{title || id}</div>
                 <div className="FeedItem-newNotification">
@@ -99,6 +104,7 @@ const FeedItem = ({
                 </div>
             </div>
             <FeedItemDetails
+                feedItemID={id}
                 data={Object.assign({}, data, { title, url, img })}
                 foldedClass={foldedClass}
             />
@@ -106,27 +112,34 @@ const FeedItem = ({
     );
 };
 
-const FeedItemDetails = ({ data, foldedClass }) => {
+const FeedItemDetails = ({ feedItemID, data, foldedClass }) => {
     return (
         <ul className={`FeedItem-details ${foldedClass}`}>
             {Object.keys(data).map(propKey => {
                 return (
                     data[propKey] && (
-                        <li className="FeedItem-detailsProp">
-                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
-                                {propKey}
-                            </div>
-                            <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
-                                <PropValue
-                                    propKey={propKey}
-                                    propValue={data[propKey]}
-                                />
-                            </div>
-                        </li>
+                        <FeedItemDetailProp
+                            key={`fed-${feedItemID}-${propKey}`}
+                            data={data}
+                            propKey={propKey}
+                        />
                     )
                 );
             })}
         </ul>
+    );
+};
+
+const FeedItemDetailProp = ({ data, propKey }) => {
+    return (
+        <li className="FeedItem-detailsProp">
+            <div className="FeedItem-detailsPropItem FeedItem-detailsPropKey">
+                {propKey}
+            </div>
+            <div className="FeedItem-detailsPropItem FeedItem-detailsPropValue">
+                <PropValue propKey={propKey} propValue={data[propKey]} />
+            </div>
+        </li>
     );
 };
 

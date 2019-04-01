@@ -92,9 +92,10 @@ const createFeedEditorProps = (feedEditor, commands) => {
 
 const applyFilter = (filterStr, items) => {
     filterStr = filterStr.toLowerCase();
-    if (!filterStr) return items;
-    return items.filter(item => {
-        return item.title.toLowerCase().indexOf(filterStr) !== -1;
+    return items.map(item => {
+        item.isActive =
+            !filterStr || item.title.toLowerCase().indexOf(filterStr) !== -1;
+        return item;
     });
 };
 
