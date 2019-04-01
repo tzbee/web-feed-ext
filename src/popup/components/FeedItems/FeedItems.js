@@ -24,7 +24,6 @@ export default ({
 
     return items && items.length > 0 ? (
         <ul className="FeedItems">
-            {' '}
             {items.map((item, i) => (
                 <FeedItem
                     key={'fi-' + item.id + '-' + i}
@@ -35,7 +34,7 @@ export default ({
                     banItemID={handleBanItemID}
                     toggleItemFolding={toggleItemFolding}
                 />
-            ))}{' '}
+            ))}
         </ul>
     ) : (
         <EmptyFeedItems />
@@ -88,17 +87,15 @@ const FeedItem = ({
                         href="#"
                         onClick={handleBanItemID}
                     >
-                        {' '}
-                        Ban item ID{' '}
-                    </a>{' '}
+                        Ban item ID
+                    </a>
                     <a
                         className="FeedItem-foldUnfold FeedItem-toolboxItem"
                         href="#"
                         onClick={handleFollowLink}
                     >
-                        {' '}
-                        Go to link{' '}
-                    </a>{' '}
+                        Go to link
+                    </a>
                 </div>
             </div>
             <FeedItemDetails

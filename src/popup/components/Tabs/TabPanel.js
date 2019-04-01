@@ -22,7 +22,7 @@ export default ({
     selectTabID,
     classMap = DEFAULT_CLASS_MAP
 }) => {
-    const renderChildren = (classNames = '') => {
+    const renderTabContent = (classNames = '') => {
         return React.Children.map(children, (child, i) => {
             const { id, data } = tabs[i];
             return (
@@ -45,13 +45,18 @@ export default ({
 
     return (
         <div className={`TabPanel ${mainClasses}`}>
-            <TabNav
-                tabs={navigableTabs}
-                selectedTabID={selectedTabID}
-                selectTab={selectTabID}
-                classMap={{ tabNav, tabNavItem }}
-            />
-            <div className="TabPanel-content">{renderChildren(tabClasses)}</div>
+            <div className="TabPanel-tabNav">
+                <TabNav
+                    tabs={navigableTabs}
+                    selectedTabID={selectedTabID}
+                    selectTab={selectTabID}
+                    classMap={{ tabNav, tabNavItem }}
+                />
+            </div>
+            <div className="TabPanel-midBanner" />
+            <div className="TabPanel-content">
+                {renderTabContent(tabClasses)}
+            </div>
         </div>
     );
 };

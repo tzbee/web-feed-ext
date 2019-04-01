@@ -16,7 +16,8 @@ const DEFAULT_EDITED_FEED = {
 
 const DEFAULT_FEED_ITEM_LIST = {
     feedID: '',
-    items: {}
+    items: {},
+    filter: ''
 };
 
 const DEFAULT_STATE = {
@@ -31,8 +32,9 @@ const DEFAULT_STATE = {
 // SET_EDIT_FEED | SET_PLUGINS
 export default (
     state = DEFAULT_STATE,
-    { type, tab, commands, feed, feedID, feeds, itemFolding }
+    { type, tab, commands, feed, feedID, feeds, itemFolding, filterValue }
 ) => {
+    var feedItemList;
     switch (type) {
         case 'SET_EDITED_FEED':
             return Object.assign({}, state, {
@@ -67,9 +69,13 @@ export default (
             });
         case 'TOGGLE_ITEM_FOLDING':
             const { itemID, folding } = itemFolding;
-            const feedItemList = Object.assign({}, state.feedItemList);
+            feedItemList = Object.assign({}, state.feedItemList);
             const { items } = feedItemList;
             items[itemID] = folding;
+            return Object.assign({}, state, { feedItemList });
+        case 'SET_FILTER':
+            feedItemList = Object.assign({}, state.feedItemList);
+            feedItemList.filter = filterValue;
             return Object.assign({}, state, { feedItemList });
         default:
             return state;

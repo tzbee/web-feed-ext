@@ -9,7 +9,8 @@ import {
     setEditedFeed,
     createNewFeed,
     setFeedItemList,
-    toggleItemFolding
+    toggleItemFolding,
+    setFilter
 } from '../../actions';
 
 import {
@@ -26,7 +27,7 @@ import {
 import TabPanel from './TabPanel';
 import FeedList from '../Feeds/Feeds';
 import FeedEditorTabPanel from '../FeedEditor/FeedEditor';
-import FeedItems from '../FeedItems/FeedItems';
+import FeedItemsTab from '../FeedItems/FeedItemsTab';
 
 const { connect } = ReactRedux;
 
@@ -39,7 +40,7 @@ const MainTabPanel = ({ ...props }) => {
         <TabPanel classMap={CLASS_MAP} {...props}>
             <FeedList />
             <FeedEditorTabPanel />
-            <FeedItems />
+            <FeedItemsTab />
         </TabPanel>
     );
 };
@@ -89,6 +90,14 @@ const createFeedEditorProps = (feedEditor, commands) => {
     };
 };
 
+const applyFilter = (filterStr, items) => {
+    filterStr = filterStr.toLowerCase();
+    if (!filterStr) return items;
+    return items.filter(item => {
+        return item.title.toLowerCase().indexOf(filterStr) !== -1;
+    });
+};
+
 const mapStateToProps = ({
     tab,
     commands,
@@ -96,7 +105,7 @@ const mapStateToProps = ({
     feedEditor,
     feedItemList
 }) => {
-    const { feedID, items: itemFolding } = feedItemList;
+    const { feedID, items: itemFolding, filter } = feedItemList;
     const feed = feeds.find(feed => feed.id === feedID);
     const items =
         (feed &&
@@ -124,7 +133,8 @@ const mapStateToProps = ({
             // No title props means the tab is not navigable through the menu
             data: {
                 feedID,
-                items
+                items: applyFilter(filter, items),
+                filterValue: filter
             }
         }
     ];
@@ -164,7 +174,8 @@ const mapDispatchToProps = dispatch => ({
     banItemIDFromFeed: (itemID, feedID) =>
         dispatch(banItemIDFromFeed(itemID, feedID)),
     toggleItemFolding: (itemID, folding) =>
-        dispatch(toggleItemFolding(itemID, folding))
+        dispatch(toggleItemFolding(itemID, folding)),
+    filterItems: filterValue => dispatch(setFilter(filterValue))
 });
 
 const mergeProps = (propsFromState, propsFromDispatch) => {
@@ -182,7 +193,8 @@ const mergeProps = (propsFromState, propsFromDispatch) => {
         openNewTab,
         unfollowFeed,
         banItemIDFromFeed,
-        toggleItemFolding
+        toggleItemFolding,
+        filterItems
     } = propsFromDispatch;
 
     const { tabs } = propsFromState;
@@ -207,6 +219,7 @@ const mergeProps = (propsFromState, propsFromDispatch) => {
     feedItemListTab.data.openNewTab = openNewTab;
     feedItemListTab.data.banItemIDFromFeed = banItemIDFromFeed;
     feedItemListTab.data.toggleItemFolding = toggleItemFolding;
+    feedItemListTab.data.onFilterChange = filterItems;
 
     return { ...propsFromState, ...propsFromDispatch };
 };
