@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './SearchBar.scss';
 
 export default ({ filterValue, onChange }) => {
 	const handleFilterChange = e => {
@@ -7,12 +8,12 @@ export default ({ filterValue, onChange }) => {
 	};
 
 	return (
-		<div className="FilterBar">
+		<div className="SearchBar">
 			<input
 				type="text"
 				value={filterValue}
 				onChange={handleFilterChange}
-				placeholder="Filter items"
+				placeholder="Search"
 			/>
 		</div>
 	);

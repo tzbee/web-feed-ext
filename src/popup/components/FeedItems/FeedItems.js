@@ -22,7 +22,11 @@ export default ({
         banItemIDFromFeed(itemID, feedID);
     };
 
-    return items && items.length > 0 ? (
+    const isItemListNotEmpty = () => {
+        return items && items.length > 0 && items.some(item => item.isActive);
+    };
+
+    return isItemListNotEmpty() ? (
         <ul className="FeedItems">
             {items.map((item, i) => (
                 <FeedItem
@@ -68,6 +72,7 @@ const FeedItem = ({
         toggleItemFolding && toggleItemFolding(id, !isFolded);
     };
 
+    isActive = isActive === undefined ? true : isActive; // Force true if the prop does not exist
     const isActiveClass = isActive ? 'FeedItem-active' : 'FeedItem-inactive';
     const foldedClass = isFolded ? 'FeedItem-folded' : 'FeedItem-unfolded';
 
