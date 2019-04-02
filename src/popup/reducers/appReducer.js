@@ -17,7 +17,8 @@ const DEFAULT_EDITED_FEED = {
 const DEFAULT_FEED_ITEM_LIST = {
     feedID: '',
     items: {},
-    filter: ''
+    filterInput: '',
+    appliedFilter: ''
 };
 
 const DEFAULT_STATE = {
@@ -73,9 +74,13 @@ export default (
             const { items } = feedItemList;
             items[itemID] = folding;
             return Object.assign({}, state, { feedItemList });
-        case 'SET_FILTER':
+        case 'SET_FILTER_INPUT':
             feedItemList = Object.assign({}, state.feedItemList);
-            feedItemList.filter = filterValue;
+            feedItemList.filterInput = filterValue;
+            return Object.assign({}, state, { feedItemList });
+        case 'APPLY_FILTER':
+            feedItemList = Object.assign({}, state.feedItemList);
+            feedItemList.appliedFilter = filterValue;
             return Object.assign({}, state, { feedItemList });
         default:
             return state;

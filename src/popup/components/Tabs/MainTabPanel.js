@@ -90,15 +90,6 @@ const createFeedEditorProps = (feedEditor, commands) => {
     };
 };
 
-const applyFilter = (filterStr, items) => {
-    filterStr = filterStr.toLowerCase();
-    return items.map(item => {
-        item.isActive =
-            !filterStr || item.title.toLowerCase().indexOf(filterStr) !== -1;
-        return item;
-    });
-};
-
 const mapStateToProps = ({
     tab,
     commands,
@@ -106,14 +97,27 @@ const mapStateToProps = ({
     feedEditor,
     feedItemList
 }) => {
-    const { feedID, items: itemFolding, filter } = feedItemList;
+    const {
+        feedID,
+        items: itemFolding,
+        appliedFilter,
+        filterInput
+    } = feedItemList;
     const feed = feeds.find(feed => feed.id === feedID);
+    const filterStr = appliedFilter.toLowerCase();
+
     const items =
         (feed &&
             feed.items &&
             feed.items.map(item => {
+                // Set item folding prop
                 item.isFolded =
                     item.id in itemFolding ? itemFolding[item.id] : true;
+
+                // Set item display prop
+                item.isActive =
+                    !filterStr ||
+                    item.title.toLowerCase().indexOf(filterStr) !== -1;
                 return item;
             })) ||
         [];
@@ -134,8 +138,8 @@ const mapStateToProps = ({
             // No title props means the tab is not navigable through the menu
             data: {
                 feedID,
-                items: applyFilter(filter, items),
-                filterValue: filter
+                items,
+                filterValue: filterInput
             }
         }
     ];

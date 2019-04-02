@@ -29,4 +29,21 @@ export const toggleItemFolding = (itemID, folding) => ({
 	itemFolding: { itemID, folding }
 });
 
-export const setFilter = filterValue => ({ type: 'SET_FILTER', filterValue });
+/*
+	Filter actions
+*/
+
+const setFilterInput = filterValue => ({
+	type: 'SET_FILTER_INPUT',
+	filterValue
+});
+
+const applyFilter = filterValue => ({
+	type: 'APPLY_FILTER',
+	filterValue
+});
+
+export const setFilter = filterValue => dispatch => {
+	dispatch(setFilterInput(filterValue));
+	dispatch(applyFilter(filterValue));
+};
