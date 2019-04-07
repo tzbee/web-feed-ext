@@ -1,6 +1,5 @@
 import log from './log';
-import LinkPlugin from './local-plugins/AllLink/Plugin';
-import { setDefaultIcon, setLoadingIcon, setNewFeedsIcon } from './PopupIcon';
+import { setDefaultIcon, setLoadingIcon } from './PopupIcon';
 
 // TODO move state to the object itself
 
