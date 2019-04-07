@@ -18,7 +18,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.(jpe?g|gif|png|svg(\?v=\d+\.\d+\.\d+)?|woff(\?v=\d+\.\d+\.\d+)?|woff2(\?v=\d+\.\d+\.\d+)?|ttf(\?v=\d+\.\d+\.\d+)?|wav|mp3|eot(\?v=\d+\.\d+\.\d+)?)$/,

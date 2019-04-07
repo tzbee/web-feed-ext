@@ -1,31 +1,22 @@
 {
-    "parserOptions":
-    {
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parserOptions": {
         "ecmaVersion": 8,
-        "ecmaFeatures":
-        {
+        "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
             "jsx": true
         },
         "sourceType": "module"
     },
 
-    "env":
-    {
+    "env": {
         "es6": true,
         "node": true
     },
 
-    "plugins": [
-        "import",
-        "node",
-        "promise",
-        "standard",
-        "react"
-    ],
+    "plugins": ["import", "node", "promise", "standard", "react"],
 
-    "globals":
-    {
+    "globals": {
         "document": false,
         "navigator": false,
         "window": false,
@@ -33,16 +24,16 @@
         "React": true,
         "ReactDOM": true
     },
-    "rules":
-    {
+    "rules": {
         "semi": ["error", "always"],
-        "no-unused-vars": ["error",
-        {
-            "vars": "all",
-            "args": "after-used",
-            "ignoreRestSiblings": false
-        }],
-        "no-undef": "error",
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": false
+            }
+        ],
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error"
     }
