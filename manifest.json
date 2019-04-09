@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "web-feed-ext",
+    "name": "Web Feed",
     "version": "0.1.0",
-    "description": "Configurable, plugin based, web feed chrome extension",
+    "description": "A configurable, plugin based, web feed chrome extension",
     "browser_action": {
         "default_icon": {
             "16": "dist/img/up-arrow.png",
