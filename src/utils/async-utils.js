@@ -1,3 +1,5 @@
+import log from '../background/log';
+
 /*
     Wait a random amount of time between {min} and {max} ms
     @return A Promise resolved when done
@@ -6,6 +8,7 @@ function waitRandom(min, max) {
 	if (max < min) max = min;
 	return new Promise(resolve => {
 		const random = min + Math.random() * (max - min);
+		log(`Waiting ${random / 1000} seconds..`);
 		setTimeout(resolve, random);
 	});
 }
@@ -23,6 +26,7 @@ function waitRandom(min, max) {
 */
 
 const runSequence = (fnQueue, min = 1000, max = 3000) => {
+	log('Starting sequence');
 	const results = [];
 	var promise = Promise.resolve();
 

@@ -1,4 +1,4 @@
-import log from '../../background/log';
+import log from '../background/log';
 
 /*
 	Network fetcher using XHR with JQuery

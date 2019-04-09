@@ -1,4 +1,4 @@
-const BasicPlugin = require('../../../lib/crawler-lib/BasicPlugin');
+const BasicPlugin = require('../../../utils/BasicPlugin');
 const Parser = require('./Parser'); // sync
 
 module.exports = class IMDBOpeningThisWeekPlugin extends BasicPlugin {

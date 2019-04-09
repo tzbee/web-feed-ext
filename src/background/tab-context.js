@@ -11,7 +11,7 @@
    @return the created {tabContext}
 */
 
-import { isString, isArray } from './utils';
+import { isString, isArray } from '../utils/utils';
 
 function createNewTabContext() {
     var contextWindowID = null;

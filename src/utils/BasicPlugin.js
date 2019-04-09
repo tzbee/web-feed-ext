@@ -1,4 +1,4 @@
-import log from '../../background/log';
+import log from '../background/log';
 
 const Fetcher = require('./Fetcher');
 const { runSequence } = require('./async-utils');

@@ -18,7 +18,7 @@
 
 import log from './log';
 import EventEmitter from 'wolfy87-eventemitter';
-import async from './async';
+import async from '../utils/async-utils';
 import uuidv1 from 'uuid/v1';
 import ChromeStorage from './ChromeStorage';
 

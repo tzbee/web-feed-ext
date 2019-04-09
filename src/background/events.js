@@ -1,4 +1,4 @@
-import { getTotalNewFeedItemsCount } from './utils';
+import { getTotalNewFeedItemsCount } from '../utils/utils';
 import { setDefaultIcon, setNewFeedsIcon } from './PopupIcon';
 
 export const hookEvents = (

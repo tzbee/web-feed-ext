@@ -7,7 +7,7 @@ import { hookEvents } from './events';
 import openNewTab from './tab-context';
 
 import log from './log';
-import { runSequence } from './async';
+import { runSequence } from '../utils/async-utils';
 
 // Connect to host application
 const port = chrome.runtime.connectNative('com.tzbee.crawler');
