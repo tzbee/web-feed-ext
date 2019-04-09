@@ -1,4 +1,4 @@
-# crawler-ext
+# web-feed-ext
 
 A configurable web feed chrome extension using [React](https://reactjs.org/) and [Redux](https://redux.js.org/). The extension provides customizable web feeds. Each feed retrieves data by using a plugin.
 Plugins are hardcoded at the moment, maybe looking for a way to load them dynamically in the future.
