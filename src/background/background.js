@@ -1,7 +1,7 @@
 import ChromeDispatcher from './ChromeDispatcher';
 import FeedManager from './FeedManager';
 import NativeCrawler from './NativeCrawler';
-import LocalCrawler from './LocalCrawler';
+import LocalPluginManager from './plugin-managers/LocalPluginManager';
 
 import { hookEvents } from './events';
 import openNewTab from './tab-context';
@@ -12,7 +12,7 @@ import { runSequence } from './async';
 // Connect to host application
 const port = chrome.runtime.connectNative('com.tzbee.crawler');
 
-var crawler = null;
+var pluginManager = null;
 var dispatcher;
 var feedManager;
 
@@ -28,18 +28,18 @@ setTimeout(() => {
 	dispatcher = new ChromeDispatcher(chrome, port);
 
 	if (nativeAppFound) {
-		log('Host application found, using native crawler');
-		crawler = new NativeCrawler(dispatcher);
+		log('Host application found, using native plugin manager');
+		pluginManager = new NativeCrawler(dispatcher);
 	} else {
 		/*
 		If no host app was found or was unable to connect to,
 		use the local crawler
 	*/
-		log('No host application found, using local crawler');
-		crawler = new LocalCrawler();
+		log('No host application found, using local plugin manager');
+		pluginManager = new LocalPluginManager();
 	}
 
-	feedManager = new FeedManager(crawler);
+	feedManager = new FeedManager(pluginManager);
 
 	// Load all feeds in the cache
 	feedManager.loadFeeds().then(() => {
@@ -47,7 +47,7 @@ setTimeout(() => {
 			dispatcher,
 			feedManager,
 			openNewTab,
-			crawler,
+			pluginManager,
 			nativeAppFound
 		);
 

@@ -19,7 +19,6 @@
 import log from './log';
 import EventEmitter from 'wolfy87-eventemitter';
 import async from './async';
-import runQuery from './runQuery';
 import uuidv1 from 'uuid/v1';
 import ChromeStorage from './ChromeStorage';
 
@@ -63,10 +62,10 @@ const DEFAULT_FEED_PROPS = {
         UPDATE_STOP
 */
 export default class FeedManager extends EventEmitter {
-    constructor(crawler) {
+    constructor(pluginManager) {
         super();
 
-        this.crawler = crawler;
+        this.pluginManager = pluginManager;
 
         // Feed cache
         this.feeds = {};
@@ -251,39 +250,6 @@ export default class FeedManager extends EventEmitter {
         });
     }
 
-    getFeedsByParserURL(url) {
-        const parsers = this.parserCache;
-
-        log(`Finding feeds by parser url ${url}..`);
-
-        const feeds = this.getFeeds();
-
-        const res = feeds.filter(feed => {
-            const parser = parsers.getCrawlerByID(feed.parser);
-
-            if (!parser) {
-                log(`No parser ${feed.parser} found`);
-                return false;
-            }
-
-            const { test } = parser;
-
-            if (test === undefined) {
-                log(`No test found for parser ${feed.parser}`);
-            }
-
-            return test && test.test(url);
-        });
-
-        if (res.length > 0) {
-            log(`${res.length} feeds found for parser url ${url}`);
-        } else {
-            log(`No feeds found for parser url ${url}`);
-        }
-
-        return res;
-    }
-
     /*
         Async
         returns Promes when saving is done
@@ -403,21 +369,21 @@ export default class FeedManager extends EventEmitter {
         // Update the counter
         this._updateCount(1, feed);
 
-        if (!this.crawler || !this.crawler.crawl) {
-            return Promise.reject(new Error('No crawler found'));
+        if (!this.pluginManager || !this.pluginManager.runPlugin) {
+            return Promise.reject(new Error('No plugin manager found'));
         }
 
-        const crawl = this.crawler.crawl.bind(this.crawler);
+        const runPlugin = this.pluginManager.runPlugin.bind(this.pluginManager);
         const { commandID, args: commandOptions } = feed;
 
         this._setLoading(feed.id, true);
 
-        // Start crawling the urls
-        return crawl(commandID, commandOptions)
+        // Run the plugin with the given options
+        return runPlugin(commandID, commandOptions)
             .then(results => this._filterResults(results, feed.bannedIDs))
             .then(results => this._handleResults(results, feed))
             .catch(err => {
-                log('Crawling ERROR: ' + err.message);
+                log('Plugin runtime ERROR: ' + err.message);
 
                 this._setLoading(feed.id, false);
 

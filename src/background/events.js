@@ -78,7 +78,7 @@ export const hookEvents = (
         });
     } else {
         loadCommandHandler = () => {
-            const pluginIDs = pluginManager.get();
+            const pluginIDs = pluginManager.loadPlugins();
 
             dispatcher.sendMessage('LOAD_COMMANDS:RESPONSE', {
                 commands: pluginIDs

@@ -1,15 +1,12 @@
-import log from './log';
-import { setDefaultIcon, setLoadingIcon } from './PopupIcon';
-
-// TODO move state to the object itself
+import log from '../log';
+import { setDefaultIcon, setLoadingIcon } from '../PopupIcon';
 
 /*
 	Map holding available local plugins
 */
-
 const REGISTERED_PLUGINS = [
-	require('./local-plugins/AllLink/Plugin'),
-	require('./local-plugins/IMDBOpeningThisWeek/Plugin')
+	require('../local-plugins/AllLink/Plugin'),
+	require('../local-plugins/IMDBOpeningThisWeek/Plugin')
 ];
 
 const PLUGIN_MAP = REGISTERED_PLUGINS.reduce((pluginMap, Plugin) => {
@@ -21,14 +18,25 @@ const PLUGIN_MAP = REGISTERED_PLUGINS.reduce((pluginMap, Plugin) => {
 
 const DEFAULT_PLUGIN_ID = Object.keys(PLUGIN_MAP)[0];
 
-export default class LocalCrawler {
+export default class LocalPluginManager {
+	/*
+		Async
+		returns Promise
+		resolves into an Array of serialized Plugins
+	*/
+	loadPlugins() {
+		return Object.keys(PLUGIN_MAP).map(pluginID => ({
+			id: pluginID,
+			args: PLUGIN_MAP[pluginID].args
+		}));
+	}
+
 	/*
         Async
         returns Promise 
-        resolve into Array of {Feed}
+        resolves into Array of {Feed}
     */
-
-	crawl(pluginID = DEFAULT_PLUGIN_ID, options = []) {
+	runPlugin(pluginID = DEFAULT_PLUGIN_ID, options = []) {
 		log(`Running plugin ${pluginID}' in browser`);
 
 		// Set loading icon
@@ -57,12 +65,5 @@ export default class LocalCrawler {
 			setDefaultIcon();
 			return results;
 		});
-	}
-
-	get() {
-		return Object.keys(PLUGIN_MAP).map(pluginID => ({
-			id: pluginID,
-			args: PLUGIN_MAP[pluginID].args
-		}));
 	}
 }
