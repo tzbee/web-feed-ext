@@ -1,4 +1,3 @@
-import log from './log';
 import { getTotalNewFeedItemsCount } from './utils';
 import { setDefaultIcon, setNewFeedsIcon } from './PopupIcon';
 
@@ -6,8 +5,7 @@ export const hookEvents = (
     dispatcher,
     feedManager,
     openNewTab,
-    pluginManager,
-    nativeSupport = true
+    pluginManager
 ) => {
     // Events from the feed logic
     feedManager.on('FEEDS_HAVE_CHANGED', feeds => {
@@ -53,42 +51,15 @@ export const hookEvents = (
         OPEN_NEW_TAB: ({ url }) => openNewTab(url),
         BAN_ITEM_ID_FROM_FEED: ({ itemID, feedID }) => {
             feedManager.banItemIDFromFeed(itemID, feedID);
+        },
+        LOAD_COMMANDS: () => {
+            pluginManager.loadPlugins().then(commands => {
+                dispatcher.sendMessage('LOAD_COMMANDS:RESPONSE', {
+                    commands
+                });
+            });
         }
     };
-
-    var loadCommandHandler;
-
-    if (nativeSupport) {
-        loadCommandHandler = () => {
-            log('Loading commands');
-            dispatcher.sendMessageToNative('LOAD_COMMANDS');
-        };
-
-        // Event map from native
-        const eventsFromNative = {
-            'LOAD_COMMANDS:RESPONSE': ({ commands }) => {
-                log('Commands loaded');
-                dispatcher.sendMessage('LOAD_COMMANDS:RESPONSE', { commands });
-            }
-        };
-
-        Object.keys(eventsFromNative).forEach(eventID => {
-            const handler = eventsFromNative[eventID];
-            dispatcher.onNativeMessage(eventID, handler);
-        });
-    } else {
-        loadCommandHandler = () => {
-            const pluginIDs = pluginManager.loadPlugins();
-
-            dispatcher.sendMessage('LOAD_COMMANDS:RESPONSE', {
-                commands: pluginIDs
-            });
-        };
-    }
-
-    Object.assign(eventsFromPopup, {
-        LOAD_COMMANDS: loadCommandHandler
-    });
 
     Object.keys(eventsFromPopup).forEach(eventID => {
         const handler = eventsFromPopup[eventID];

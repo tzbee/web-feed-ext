@@ -1,6 +1,6 @@
 import ChromeDispatcher from './ChromeDispatcher';
 import FeedManager from './FeedManager';
-import NativeCrawler from './NativeCrawler';
+import NativePluginManager from './plugin-managers/NativePluginManager';
 import LocalPluginManager from './plugin-managers/LocalPluginManager';
 
 import { hookEvents } from './events';
@@ -29,7 +29,7 @@ setTimeout(() => {
 
 	if (nativeAppFound) {
 		log('Host application found, using native plugin manager');
-		pluginManager = new NativeCrawler(dispatcher);
+		pluginManager = new NativePluginManager(dispatcher);
 	} else {
 		/*
 		If no host app was found or was unable to connect to,
@@ -41,26 +41,28 @@ setTimeout(() => {
 
 	feedManager = new FeedManager(pluginManager);
 
-	// Load all feeds in the cache
-	feedManager.loadFeeds().then(() => {
-		hookEvents(
-			dispatcher,
-			feedManager,
-			openNewTab,
-			pluginManager,
-			nativeAppFound
-		);
+	// Load all plugins and feeds in the cache
+	pluginManager.loadPlugins().then(() => {
+		feedManager.loadFeeds().then(() => {
+			hookEvents(
+				dispatcher,
+				feedManager,
+				openNewTab,
+				pluginManager,
+				nativeAppFound
+			);
 
-		// TODO Set example feed only on first startup
-		// TODO Load the example(s) from a file
-		const EXAMPLE_FEEDS = require('./example-feeds.json');
+			// TODO Set example feed only on first startup
+			// TODO Load the example(s) from a file
+			const EXAMPLE_FEEDS = require('./example-feeds.json');
 
-		const fnQueue = EXAMPLE_FEEDS.map(exampleFeed =>
-			feedManager.createFeed.bind(feedManager, exampleFeed)
-		);
+			const fnQueue = EXAMPLE_FEEDS.map(exampleFeed =>
+				feedManager.createFeed.bind(feedManager, exampleFeed)
+			);
 
-		runSequence(fnQueue, 0, 0).then(() => {
-			feedManager.watchFeeds();
+			runSequence(fnQueue, 0, 0).then(() => {
+				feedManager.watchFeeds();
+			});
 		});
 	});
 }, 500);

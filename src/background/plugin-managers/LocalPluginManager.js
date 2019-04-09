@@ -25,10 +25,11 @@ export default class LocalPluginManager {
 		resolves into an Array of serialized Plugins
 	*/
 	loadPlugins() {
-		return Object.keys(PLUGIN_MAP).map(pluginID => ({
+		const plugins = Object.keys(PLUGIN_MAP).map(pluginID => ({
 			id: pluginID,
 			args: PLUGIN_MAP[pluginID].args
 		}));
+		return Promise.resolve(plugins);
 	}
 
 	/*
