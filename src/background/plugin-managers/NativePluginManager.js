@@ -7,6 +7,8 @@ export default class NativePluginManager {
 
 	// Async
 	loadPlugins() {
+		log('Loading native plugins');
+
 		const { dispatcher } = this;
 
 		const loadedP = new Promise(resolve => {

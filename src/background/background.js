@@ -1,7 +1,6 @@
 import ChromeDispatcher from './ChromeDispatcher';
 import FeedManager from './FeedManager';
-import NativePluginManager from './plugin-managers/NativePluginManager';
-import LocalPluginManager from './plugin-managers/LocalPluginManager';
+import PluginManager from './plugin-managers/PluginManager';
 
 import { hookEvents } from './events';
 import openNewTab from './tab-context';
@@ -29,16 +28,11 @@ setTimeout(() => {
 
 	if (nativeAppFound) {
 		log('Host application found, using native plugin manager');
-		pluginManager = new NativePluginManager(dispatcher);
 	} else {
-		/*
-		If no host app was found or was unable to connect to,
-		use the local crawler
-	*/
 		log('No host application found, using local plugin manager');
-		pluginManager = new LocalPluginManager();
 	}
 
+	pluginManager = new PluginManager(nativeAppFound, dispatcher);
 	feedManager = new FeedManager(pluginManager);
 
 	// Load all plugins and feeds in the cache

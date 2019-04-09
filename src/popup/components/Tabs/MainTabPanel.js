@@ -106,18 +106,29 @@ const mapStateToProps = ({
     const feed = feeds.find(feed => feed.id === feedID);
     const filterStr = appliedFilter.toLowerCase();
 
+    // Decide if an item should be displaied base on the filter string
+    const isItemFilteredIn = item => {
+        const itemTitle = item.title || '';
+        const itemID = item.id || '';
+
+        return (
+            !filterStr ||
+            itemTitle.indexOf(filterStr) !== -1 ||
+            itemID.indexOf(filterStr) !== -1
+        );
+    };
+
     const items =
         (feed &&
             feed.items &&
             feed.items.map(item => {
+                // Set item display prop
+                item.isActive = isItemFilteredIn(item);
+
                 // Set item folding prop
                 item.isFolded =
                     item.id in itemFolding ? itemFolding[item.id] : true;
 
-                // Set item display prop
-                item.isActive =
-                    !filterStr ||
-                    item.title.toLowerCase().indexOf(filterStr) !== -1;
                 return item;
             })) ||
         [];

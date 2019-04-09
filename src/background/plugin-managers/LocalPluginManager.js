@@ -1,5 +1,4 @@
 import log from '../log';
-import { setDefaultIcon, setLoadingIcon } from '../PopupIcon';
 
 /*
 	Map holding available local plugins
@@ -25,6 +24,8 @@ export default class LocalPluginManager {
 		resolves into an Array of serialized Plugins
 	*/
 	loadPlugins() {
+		log('Loading local plugins');
+
 		const plugins = Object.keys(PLUGIN_MAP).map(pluginID => ({
 			id: pluginID,
 			args: PLUGIN_MAP[pluginID].args
@@ -39,9 +40,6 @@ export default class LocalPluginManager {
     */
 	runPlugin(pluginID = DEFAULT_PLUGIN_ID, options = []) {
 		log(`Running plugin ${pluginID}' in browser`);
-
-		// Set loading icon
-		setLoadingIcon();
 
 		if (!pluginID)
 			return Promise.reject(
@@ -62,9 +60,6 @@ export default class LocalPluginManager {
 				return map;
 			}, {});
 
-		return plugin.run(optionsMap).then(results => {
-			setDefaultIcon();
-			return results;
-		});
+		return plugin.run(optionsMap);
 	}
 }
