@@ -17,6 +17,7 @@
     "plugins": ["import", "node", "promise", "standard", "react"],
 
     "globals": {
+
         "document": false,
         "navigator": false,
         "window": false,
@@ -35,6 +36,7 @@
             }
         ],
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "no-console":0
     }
 }

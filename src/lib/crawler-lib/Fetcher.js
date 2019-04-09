@@ -1,10 +1,12 @@
+import log from '../../background/log';
+
 /*
 	Network fetcher using XHR with JQuery
 */
 
 const $ = require('jquery');
 
-const DEFAULT_LOG = message => console.log(message);
+const DEFAULT_LOG = message => log(message);
 
 module.exports = class Fetcher {
 	constructor(options = {}) {
@@ -12,10 +14,6 @@ module.exports = class Fetcher {
 	}
 
 	fetch(url) {
-		const options = {
-			url
-		};
-
 		this.log(`Fetching ${url} using XHR`);
 
 		return new Promise((resolve, reject) => {

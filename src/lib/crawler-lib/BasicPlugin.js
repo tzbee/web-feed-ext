@@ -1,7 +1,9 @@
+import log from '../../background/log';
+
 const Fetcher = require('./Fetcher');
 const { runSequence } = require('./async-utils');
 
-const isRelativeURL = url => /^\/{1}[^\/]{1}[^?#]*/.test(url);
+const isRelativeURL = url => /^\/{1}[^/]{1}[^?#]*/.test(url);
 
 const isHash = url => /[#]{1}[^?#]*/.test(url);
 
@@ -18,7 +20,7 @@ const toAbsoluteURL = (parsedSourceURL, href) => {
 		: href;
 };
 
-const DEFAULT_LOG = message => console.log(message);
+const DEFAULT_LOG = message => log(message);
 
 module.exports = class BasicPlugin {
 	constructor(options = {}) {
@@ -46,8 +48,6 @@ module.exports = class BasicPlugin {
 	}
 
 	run({ urls }) {
-		const { fetcher, parser } = this;
-
 		const fetchAndParseQueue = urls.map(url =>
 			this._fetchAndParseSingleURL.bind(this, url)
 		);
