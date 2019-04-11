@@ -52,7 +52,7 @@ export default class NativePluginManager {
 					return map;
 				}, {});
 
-			dispatcher.sendMessageToNative('CRAWL', {
+			dispatcher.sendMessageToNative('RUN_PLUGIN', {
 				pluginID,
 				options: optionsMap
 			});

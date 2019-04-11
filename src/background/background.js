@@ -9,7 +9,7 @@ import log from './log';
 import { runSequence } from '../utils/async-utils';
 
 // Connect to host application
-const port = chrome.runtime.connectNative('com.tzbee.crawler');
+const port = chrome.runtime.connectNative('com.tzbee.webfeed');
 
 var pluginManager = null;
 var dispatcher;
